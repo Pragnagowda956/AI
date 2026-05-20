@@ -1,0 +1,23 @@
+import urllib.parse
+import webbrowser
+
+print("=== Welcome to the Web Search Bot ===")
+
+# 1. Simulate the search box by getting user input
+search_query = input("Enter what you want to search for: ").strip()
+
+if search_query:
+    # 2. Convert the text into a safe format for a web URL
+    encoded_query = urllib.parse.quote_plus(search_query)
+
+    # 3. Create the direct Google Search link
+    google_search_link = f"https://google.com{encoded_query}"
+
+    print("\n--- Generating Search Link ---")
+    print(f"Your custom search URL is:\n{google_search_link}")
+    print("\nOpening your web browser now...")
+
+    # 4. Automatically open the link in your default web browser
+    webbrowser.open(google_search_link)
+else:
+    print("Search query cannot be empty.")
