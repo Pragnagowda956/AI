@@ -1,0 +1,35 @@
+graph={
+ 'A':[('B',1),('C',3)],
+ 'B':[('D',2)],
+ 'C':[('D',4)],
+ 'D':[]
+}
+h={
+ 'A':3,
+ 'B':1,
+ 'C':2,
+ 'D':0
+}
+open=[('A',0)]
+path={}
+g={'A':0}
+while open:
+ open.sort(key=lambda x:x[1])
+ n=open.pop(0)[0]
+ if n=='D':
+  p=[]
+  while n in path:
+   p.append(n)
+   n=path[n]
+  p.append('A')
+  p.reverse()
+  print("Path found:",p)
+  print(p)
+  break
+ for m,c in graph[n]:
+  cost=g[n]+c
+  if m not in g or cost<g[m]:
+   g[m]=cost
+   f=cost+h[m]
+   open.append((m,f))
+   path[m]=n
