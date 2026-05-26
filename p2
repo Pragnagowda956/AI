@@ -1,0 +1,37 @@
+from collections import deque
+start=(3,3,0)
+goal=(0,0,1)
+moves=[(2,0),(0,2),(1,1),(1,0),(0,1)]
+def valid(c,m):
+ rc=3-c
+ rm=3-m
+ if c<0 or m<0 or c>3 or m>3:return False
+ if m>0 and c>m:return False
+ if rm>0 and rc>rm:return False
+ return True
+def bfs():
+ q=deque()
+ q.append((start,[start]))
+ visited=set()
+ while q:
+  state,path=q.popleft()
+  if state==goal:return path
+  if state in visited:continue
+  visited.add(state)
+  c,m,b=state
+  for dc,dm in moves:
+   if b==0:ns=(c-dc,m-dm,1)
+   else:ns=(c+dc,m+dm,0)
+   if valid(ns[0],ns[1]):
+    q.append((ns,path+[ns]))
+sol=bfs()
+print("Missionaries and Cannibals AI Problem Solution using Breadth First Search:")
+print("Left Side | Right Side | Boat")
+print("C M | C M | Position")
+for i,s in enumerate(sol):
+ lc,lm,b=s
+ rc=3-lc
+ rm=3-lm
+ side="left" if b==0 else "right"
+ print("State",i,"| Left C:",lc,"Left M:",lm,"| Right C:",rc,"Right M:",rm,"| Boat:",side)
+print("End of Path!")
