@@ -1,0 +1,41 @@
+import time
+jug1 = 4
+jug2 = 3
+target = 2
+visited = set()
+path = []
+start_time = time.time()
+def dfs(x, y):
+    print("Visiting node: (", x, ",", y, ")")
+    if (x, y) in visited:
+        return False
+    visited.add((x, y))
+    path.append((x, y))
+    # Goal condition
+    if x == target or y == target:
+        return True
+    next_states = [
+        (jug1, y),  # Fill Jug1
+        (x, jug2),  # Fill Jug2
+        (0, y),     # Empty Jug1
+        (x, 0),     # Empty Jug2
+        (x - min(x, jug2 - y),
+         y + min(x, jug2 - y)),
+        (x + min(y, jug1 - x),
+         y - min(y, jug1 - x))
+    ]
+    for nx, ny in next_states:
+        if dfs(nx, ny):
+            return True
+    path.pop()
+    return False
+if dfs(0, 0):
+    print("\nSolution Found!\n")
+    print("Path Found:")
+    for p in path:
+        print("(", p[0], ",", p[1], ")")
+    print("Path Cost (steps):", len(path) - 1)
+else:
+    print("No Solution")
+end_time = time.time()
+print("Execution Time: %.4f ms" % ((end_time - start_time) * 1000))
