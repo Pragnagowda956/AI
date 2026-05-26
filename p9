@@ -1,0 +1,27 @@
+board=[" "]*9
+def show():
+ print(board[0],"|",board[1],"|",board[2])
+ print("--+---+--")
+ print(board[3],"|",board[4],"|",board[5])
+ print("--+---+--")
+ print(board[6],"|",board[7],"|",board[8])
+def check(p):
+ win=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+ for i in win:
+  if board[i[0]]==board[i[1]]==board[i[2]]==p:
+   return True
+ return False
+player="X"
+for i in range(9):
+ show()
+ pos=int(input("Enter position (1-9): "))-1
+ if board[pos]==" ":
+  board[pos]=player
+  if check(player):
+   show()
+   print("Player",player,"Wins")
+   break
+  player="O" if player=="X" else "X"
+else:
+ show()
+ print("Match Draw")
