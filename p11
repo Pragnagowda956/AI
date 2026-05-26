@@ -1,0 +1,12 @@
+import random
+print("Lucky Numbers Game")
+lucky = random.randint(1,10)
+while True:
+    guess = int(input("Guess the lucky number (1-10): "))
+    if guess == lucky:
+        print("You found the lucky number")
+        break
+    elif guess > lucky:
+        print("Try lower")
+    else:
+        print("Try higher")
