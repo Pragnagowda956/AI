@@ -1,0 +1,66 @@
+
+# Missionaries and Cannibals Problem using Best First Search
+
+from queue import PriorityQueue
+
+# Create priority queue
+q = PriorityQueue()
+
+# Initial state -> (Missionaries, Cannibals, Boat)
+# Boat = 1 means left side
+# Boat = 0 means right side
+q.put((6, (3, 3, 1)))
+
+visited = []
+
+# Possible boat moves
+moves = [
+    (1, 0),
+    (2, 0),
+    (0, 1),
+    (0, 2),
+    (1, 1)
+]
+
+while not q.empty():
+
+    h, state = q.get()
+
+    m, c, b = state
+
+    # Skip visited states
+    if state in visited:
+        continue
+
+    visited.append(state)
+
+    print(state)
+
+    # Goal state
+    if state == (0, 0, 0):
+        print("Goal Reached")
+        break
+
+    # Generate next states
+    for dm, dc in moves:
+
+        if b == 1:
+            nm = m - dm
+            nc = c - dc
+        else:
+            nm = m + dm
+            nc = c + dc
+
+        nb = 1 - b
+
+        # Check valid range
+        if 0 <= nm <= 3 and 0 <= nc <= 3:
+
+            # Valid condition
+            if (nm == 0 or nm >= nc) and \
+               (3 - nm == 0 or 3 - nm >= 3 - nc):
+
+                # Heuristic value
+                h = nm + nc
+
+                q.put((h, (nm, nc, nb)))
