@@ -1,0 +1,50 @@
+
+# Water Jug Problem using DFS
+
+def dfs(cap1, cap2, target):
+    visited = set()
+
+    def solve(x, y):
+
+        # If already visited
+        if (x, y) in visited:
+            return False
+
+        # Mark as visited
+        visited.add((x, y))
+
+        # Print current state
+        print("Jug1 =", x, "Jug2 =", y)
+
+        # Check target
+        if x == target or y == target:
+            print("Target reached!")
+            return True
+
+        # Possible operations
+        return (
+            solve(cap1, y) or                         # Fill Jug1
+            solve(x, cap2) or                         # Fill Jug2
+            solve(0, y) or                            # Empty Jug1
+            solve(x, 0) or                            # Empty Jug2
+            solve(x - min(x, cap2 - y),
+                  y + min(x, cap2 - y)) or            # Pour Jug1 -> Jug2
+
+            solve(x + min(y, cap1 - x),
+                  y - min(y, cap1 - x))               # Pour Jug2 -> Jug1
+        )
+
+    return solve(0, 0)
+
+
+# Main Program
+cap1 = 4
+cap2 = 3
+target = 2
+
+result = dfs(cap1, cap2, target)
+
+if result:
+    print("Solution Exists")
+else:
+    print("Solution Not Found")
